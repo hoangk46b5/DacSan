@@ -1,0 +1,73 @@
+<ScrollView 
+    android:layout_width="fill_parent" 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="fill_parent" >
+	
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+        android:text="ten"
+        android:textSize="31dp"
+        android:textColor="#003399"
+        />
+    
+    <LinearLayout 
+        android:id="@+id/Mylayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:background="@drawable/hoangstyle"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        >
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:textSize="24dp"
+        android:text="nguyen lieu" />
+    </LinearLayout>
+    
+    <LinearLayout 
+        android:id="@+id/Mylayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/hoangstyle"
+        android:layout_below="@+id/Mylayout1"
+        
+        >
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25dp"
+        android:text="cach nau" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/textView1"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/mon1" />
+
+</RelativeLayout>
+</ScrollView>
+
