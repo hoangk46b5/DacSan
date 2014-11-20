@@ -4,44 +4,81 @@ import java.util.ArrayList;
 import java.util.List;
 
 import obj.ChuDe;
+
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SearchView;
-public class MienBacActivity extends Activity {
-	List<ChuDe> listChuDe = new ArrayList<ChuDe>();
-	VietnameseView adapterChude;
 
+public class MienBacActivity extends Activity {
+	ArrayList<ChuDe> arrayList = new ArrayList<ChuDe>();
+	VietnameseView adapter;
+	ListView lv;
+	Button btnSearch;
+	private ArrayList<ChuDe> arr_sort = new ArrayList<ChuDe>();
+	EditText txtWord;
+	int textlength = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_mien_bac);
-		final ListView listview = (ListView) findViewById(R.id.listViewMienBac);
-		loadData();
-		adapterChude = new VietnameseView(MienBacActivity.this, listChuDe);
-		listview.setAdapter(adapterChude);
-		listview.setOnItemClickListener(new OnItemClickListener() {
+		
+		txtWord = (EditText) findViewById(R.id.txtWord);
+		lv = (ListView) findViewById(R.id.listViewMienBac);
+		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				DetalActivity.listDetail.clear();
-				DetalActivity.listDetail.add(listChuDe
+				DetalActivity.listDetail.add(arrayList
 						.get(position));
 				Intent in = new Intent(MienBacActivity.this,
 						DetalActivity.class);
 				startActivity(in);
 			}
 		});
-		//tim kiem
 		
+		loadData();
+		btnSearch = (Button) findViewById(R.id.btnSearch);
+		btnSearch.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				onTextChanged();
+			}
+		});
+		adapter = new VietnameseView(this, arrayList);
+		lv.setAdapter(adapter);
+		
+	}
+
+	public void onTextChanged() {
+		textlength = txtWord.getText().length();
+		arr_sort.clear();
+		for (int i = 0; i < arrayList.size(); i++) {
+			String _text = (String) arrayList.get(i).getIdChude();
+			if (textlength <= _text.length()) {
+				if (txtWord
+						.getText()
+						.toString()
+						.equalsIgnoreCase(
+								(String) _text.subSequence(0, textlength))) {
+					Log.i("array sort", _text);
+					arr_sort.add(arrayList.get(i));
+				}
+			}
+		}
+		adapter = new VietnameseView(MienBacActivity.this, arr_sort);
+		lv.setAdapter(adapter);
 	}
 	void loadData(){
 		List<ListItem> tv_BanhKhuc = new ArrayList<ListItem>();
@@ -59,7 +96,7 @@ public class MienBacActivity extends Activity {
 		
 		cd_BanhKhuc.setImage(R.drawable.banhkhuc);
 		cd_BanhKhuc.setListTuVung(tv_BanhKhuc);
-		listChuDe.add(cd_BanhKhuc);
+		arrayList.add(cd_BanhKhuc);
 	
 	// ==================================================
 	
@@ -73,7 +110,7 @@ public class MienBacActivity extends Activity {
 		cd_CheBaCot.setIdChude("Chè bà cốt");
 		cd_CheBaCot.setImage(R.drawable.mon3);
 		cd_CheBaCot.setListTuVung(tv_CheBaCot);
-		listChuDe.add(cd_CheBaCot);
+		arrayList.add(cd_CheBaCot);
 	
 	//=====================================================
 	
@@ -86,7 +123,7 @@ public class MienBacActivity extends Activity {
 		cd_PhoGa.setIdChude("Phở Gà siêu ngon");
 		cd_PhoGa.setImage(R.drawable.phoga);
 		cd_PhoGa.setListTuVung(tv_PhoGa);
-		listChuDe.add(cd_PhoGa);
+		arrayList.add(cd_PhoGa);
 	
 	//=====================================================
 	
@@ -99,7 +136,7 @@ public class MienBacActivity extends Activity {
 		cd_CheConOng.setIdChude("Chè con ong dẻo thơm");
 		cd_CheConOng.setImage(R.drawable.checonong);
 		cd_CheConOng.setListTuVung(tv_CheConOng);
-		listChuDe.add(cd_CheConOng);
+		arrayList.add(cd_CheConOng);
 	
 
 	//========================================================
@@ -114,7 +151,7 @@ public class MienBacActivity extends Activity {
 		cd_GioXao.setIdChude("Giò Xào đón tết");
 		cd_GioXao.setImage(R.drawable.mon3);
 		cd_GioXao.setListTuVung(tv_GioXao);
-		listChuDe.add(cd_GioXao);
+		arrayList.add(cd_GioXao);
 		
 	//========================================================
 
@@ -128,7 +165,10 @@ public class MienBacActivity extends Activity {
 		cd_ChaRuoi.setIdChude("Chả Rươi");
 		cd_ChaRuoi.setImage(R.drawable.charuoi);
 		cd_ChaRuoi.setListTuVung(tv_ChaRuoi);
-		listChuDe.add(cd_ChaRuoi);
-	}
+		arrayList.add(cd_ChaRuoi);
+
 	
+
 }
+}
+		

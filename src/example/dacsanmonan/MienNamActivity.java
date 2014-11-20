@@ -9,31 +9,39 @@ import example.dacsanmonan.R.layout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MienNamActivity extends Activity {
-	List<ChuDe> listChuDe = new ArrayList<ChuDe>();
-	VietnameseView adapterChude;
+	ArrayList<ChuDe> arrayList = new ArrayList<ChuDe>();
+	VietnameseView adapter;
+	ListView lv;
+	Button btnSearch;
+	private ArrayList<ChuDe> arr_sort = new ArrayList<ChuDe>();
+	EditText txtWord;
+	int textlength = 0;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_mien_nam);
-		final ListView listview = (ListView) findViewById(R.id.listViewMienNam);
-		loadData();
-		adapterChude = new VietnameseView(MienNamActivity.this, listChuDe);
-		listview.setAdapter(adapterChude);
-		listview.setOnItemClickListener(new OnItemClickListener() {
+		setContentView(R.layout.activity_mien_bac);
+		
+		txtWord = (EditText) findViewById(R.id.txtWord);
+		lv = (ListView) findViewById(R.id.listViewMienBac);
+		lv.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				DetalActivity.listDetail.clear();
-				DetalActivity.listDetail.add(listChuDe
+				DetalActivity.listDetail.add(arrayList
 						.get(position));
 				Intent in = new Intent(MienNamActivity.this,
 						DetalActivity.class);
@@ -41,6 +49,39 @@ public class MienNamActivity extends Activity {
 			}
 		});
 		
+		loadData();
+		btnSearch = (Button) findViewById(R.id.btnSearch);
+		btnSearch.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				onTextChanged();
+			}
+		});
+		adapter = new VietnameseView(this, arrayList);
+		lv.setAdapter(adapter);
+		
+	}
+
+	public void onTextChanged() {
+		textlength = txtWord.getText().length();
+		arr_sort.clear();
+		for (int i = 0; i < arrayList.size(); i++) {
+			String _text = (String) arrayList.get(i).getIdChude();
+			if (textlength <= _text.length()) {
+				if (txtWord
+						.getText()
+						.toString()
+						.equalsIgnoreCase(
+								(String) _text.subSequence(0, textlength))) {
+					Log.i("array sort", _text);
+					arr_sort.add(arrayList.get(i));
+				}
+			}
+		}
+		adapter = new VietnameseView(MienNamActivity.this, arr_sort);
+		lv.setAdapter(adapter);
 	}
 	void loadData (){
 		List<ListItem> tv_CaKhoTieu = new ArrayList<ListItem>();
@@ -56,7 +97,7 @@ public class MienNamActivity extends Activity {
 		cd_CaKhoTieu.setIdChude("Cá kho tiêu Miền Nam");
 		cd_CaKhoTieu.setImage(R.drawable.cakhotieu);
 		cd_CaKhoTieu.setListTuVung(tv_CaKhoTieu);
-		listChuDe.add(cd_CaKhoTieu);
+		arrayList.add(cd_CaKhoTieu);
 		
 		//==========================================================
 		
@@ -71,7 +112,7 @@ public class MienNamActivity extends Activity {
 		cd_BanhTrangTron.setIdChude("Bánh tráng trộn");
 		cd_BanhTrangTron.setImage(R.drawable.banhtrangtron);
 		cd_BanhTrangTron.setListTuVung(tv_BanhTrangTron);
-		listChuDe.add(cd_BanhTrangTron);
+		arrayList.add(cd_BanhTrangTron);
 		
 		//==========================================================
 		
@@ -85,7 +126,7 @@ public class MienNamActivity extends Activity {
 		cd_GoiBuoi.setIdChude("Gỏi bưởi chua lạ");
 		cd_GoiBuoi.setImage(R.drawable.goibuoi);
 		cd_GoiBuoi.setListTuVung(tv_GoiBuoi);
-		listChuDe.add(cd_GoiBuoi);
+		arrayList.add(cd_GoiBuoi);
 		
 		//==========================================================
 		
@@ -102,7 +143,7 @@ public class MienNamActivity extends Activity {
 		cd_ThitHeoKho.setIdChude("Thịt Heo kho nhừ");
 		cd_ThitHeoKho.setImage(R.drawable.thitheokho);
 		cd_ThitHeoKho.setListTuVung(tv_ThitHeoKho);
-		listChuDe.add(cd_ThitHeoKho);
+		arrayList.add(cd_ThitHeoKho);
 		
 		//==========================================================
 		
@@ -117,7 +158,7 @@ public class MienNamActivity extends Activity {
 		cd_BanhChuoi.setIdChude("Bánh Chuối hấp");
 		cd_BanhChuoi.setImage(R.drawable.banhchuoi);
 		cd_BanhChuoi.setListTuVung(tv_BanhChuoi);
-		listChuDe.add(cd_BanhChuoi);
+		arrayList.add(cd_BanhChuoi);
 		
 		//==========================================================
 		
@@ -132,7 +173,7 @@ public class MienNamActivity extends Activity {
 		cd_GoiXoai.setIdChude("Gỏi xoài chua cay");
 		cd_GoiXoai.setImage(R.drawable.goixoai);
 		cd_GoiXoai.setListTuVung(tv_GoiXoai);
-		listChuDe.add(cd_GoiXoai);
+		arrayList.add(cd_GoiXoai);
 		
 		//==========================================================
 		
@@ -145,7 +186,7 @@ public class MienNamActivity extends Activity {
 		cd_CheXoai.setIdChude("Gỏi bưởi chua lạ");
 		cd_CheXoai.setImage(R.drawable.chexoai);
 		cd_CheXoai.setListTuVung(tv_CheXoai);
-		listChuDe.add(cd_CheXoai);
+		arrayList.add(cd_CheXoai);
 				
 		//==========================================================
 		
@@ -158,7 +199,7 @@ public class MienNamActivity extends Activity {
 		cd_BanhDua.setIdChude("Bánh Dứa Nướng");
 		cd_BanhDua.setImage(R.drawable.banhdua);
 		cd_BanhDua.setListTuVung(tv_BanhDua);
-		listChuDe.add(cd_BanhDua);
+		arrayList.add(cd_BanhDua);
 	
 	}
 	

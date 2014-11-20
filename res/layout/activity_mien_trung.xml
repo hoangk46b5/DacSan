@@ -4,12 +4,37 @@
     android:layout_height="match_parent"
     tools:context="${relativePackage}.${activityClass}" >
 
+    <RelativeLayout
+        android:id="@+id/Mylayoutxxx"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+         >
+
+        <EditText
+            android:id="@+id/txtWordx"
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/btnSearchx"
+            android:ems="10"
+            android:hint="Nhập tên món ăn" />
+
+        <Button
+            android:id="@+id/btnSearchx"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/txtWordx"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/timkiem" />
+
+    </RelativeLayout>
+
     <ListView
         android:id="@+id/listViewMienTrung"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true" >
+        android:layout_height="wrap_content"
+        android:layout_below="@id/Mylayoutxxx"
+         >
     </ListView>
 
 </RelativeLayout>
